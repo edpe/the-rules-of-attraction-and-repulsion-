@@ -7,23 +7,28 @@ class CircleAgent {
   constructor(posX, posY, accX, accY) {
     this.size = random(20) + 20;
     this.pos = createVector(posX, posY);
-    this.fillColour = color(random(255),random(255),random(255));
-    // this.lineColour = random(50) + 190;
-    // this.lineThickness = random(6);
+    this.fillColour = color(random(255), random(255), random(255));
     this.vel = p5.Vector.random2D();
     this.acc = createVector(accX, accY);
   }
 
   display() {
-    // stroke(this.lineColour);
-    // strokeWeight(this.lineThickness);
     fill(this.fillColour);
-    scribble.scribbleEllipse(this.pos.x, this.pos.y, this.size, this.size)
+    scribble.scribbleEllipse(this.pos.x, this.pos.y, this.size, this.size);
   }
 
   update() {
     this.pos.add(this.vel);
     this.vel.add(this.acc);
+  }
+
+  checkBoundaries() {
+    if (this.pos.x > windowWidth || this.pos.x < 0) {
+      this.vel.x = this.vel.x * -1;
+    }
+    if (this.pos.y > windowHeight || this.pos.y < 0) {
+      this.vel.y = this.vel.y * -1;
+    }
   }
 
   attracted(target, gravity) {
@@ -50,7 +55,9 @@ function draw() {
   circle1.attracted(circle2, 20);
   circle1.update();
   circle1.display();
+  circle1.checkBoundaries();
   circle2.attracted(circle1, 20);
   circle2.update();
   circle2.display();
+  circle2.checkBoundaries();
 }
