@@ -1,7 +1,6 @@
 var scribble = new Scribble();
 let circles = [];
 
-
 class CircleAgent {
   constructor(posX, posY, accX, accY) {
     this.size = random(20) + 20;
@@ -9,6 +8,7 @@ class CircleAgent {
     this.fillColour = color(random(255), random(255), random(255));
     this.vel = p5.Vector.random2D();
     this.acc = createVector(accX, accY);
+    this.attractedState = true;
   }
 
   display() {
@@ -36,9 +36,11 @@ class CircleAgent {
     distSquared = constrain(distSquared, 25, 500);
     let strength = gravity / distSquared;
     force.setMag(strength);
-    // repel if in repel state
-    // add state to CircleAgent
-    // force.mult(-1);
+    if (this.attractedState == false) {
+      force.mult(-1);
+    } else {
+      force;
+    }
     this.acc = force;
   }
 }
@@ -53,7 +55,7 @@ function setup() {
 function draw() {
   background(20);
   for (var i = 0; i < 2; i++) {
-    circles[i].attracted(circles[(circles.length - 1) - i], 20);
+    circles[i].attracted(circles[circles.length - 1 - i], 20);
     circles[i].update();
     circles[i].display();
     circles[i].checkBoundaries();
