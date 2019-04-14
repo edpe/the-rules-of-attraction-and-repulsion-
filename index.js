@@ -5,7 +5,7 @@ class CircleAgent {
   constructor(posX, posY, accX, accY) {
     this.size = random(20) + 20;
     this.pos = createVector(posX, posY);
-    this.fillColour = color(random(255), random(255), random(255));
+    this.fillColour = color(random(255), random(255), random(255), 255);
     this.vel = p5.Vector.random2D();
     this.acc = createVector(accX, accY);
     this.relationshipLength = random(15000) + 5000; // milliseconds
@@ -51,11 +51,16 @@ class CircleAgent {
     return this.attractedState
       ? (this.attractedState = false)
       : (this.attractedState = true);
-  }
+  };
 
   changeColour = () => {
-    this.fillColour = color(random(255), random(255), random(255));
-  }
+    if (this.attractedState == false) {
+      this.fillColour.levels[3] = 50;
+    } else {
+      this.fillColour.levels[3] = 255;
+    }
+    this.fillColour;
+  };
 
   checkRelationshipStatus() {
     if (millis() > this.relationshipLength) {
