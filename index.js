@@ -1,7 +1,6 @@
 var scribble = new Scribble();
+let circles = [];
 
-var circle1;
-var circle2;
 
 class CircleAgent {
   constructor(posX, posY, accX, accY) {
@@ -46,18 +45,17 @@ class CircleAgent {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  circle1 = new CircleAgent(random(windowWidth), random(windowHeight));
-  circle2 = new CircleAgent(random(windowWidth), random(windowHeight));
+  for (var i = 0; i < 2; i++) {
+    circles.push(new CircleAgent(random(windowWidth), random(windowHeight)));
+  }
 }
 
 function draw() {
   background(20);
-  circle1.attracted(circle2, 20);
-  circle1.update();
-  circle1.display();
-  circle1.checkBoundaries();
-  circle2.attracted(circle1, 20);
-  circle2.update();
-  circle2.display();
-  circle2.checkBoundaries();
+  for (var i = 0; i < 2; i++) {
+    circles[i].attracted(circles[(circles.length - 1) - i], 20);
+    circles[i].update();
+    circles[i].display();
+    circles[i].checkBoundaries();
+  }
 }
