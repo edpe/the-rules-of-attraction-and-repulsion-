@@ -8,6 +8,7 @@ class CircleAgent {
     this.fillColour = color(random(255), random(255), random(255));
     this.vel = p5.Vector.random2D();
     this.acc = createVector(accX, accY);
+    this.relationshipLength = random(15000) + 5000; // milliseconds
     this.attractedState = true;
   }
 
@@ -44,12 +45,24 @@ class CircleAgent {
     this.acc = force;
   }
 
-  changeState() {
+  changeState = () => {
     this.acc = createVector();
     this.vel = createVector();
     return this.attractedState
       ? (this.attractedState = false)
       : (this.attractedState = true);
+  }
+
+  changeColour = () => {
+    this.fillColour = color(random(255), random(255), random(255));
+  }
+
+  checkRelationshipStatus() {
+    if (millis() > this.relationshipLength) {
+      this.relationshipLength = this.relationshipLength + millis();
+      this.changeState();
+      this.changeColour();
+    }
   }
 }
 
@@ -67,5 +80,6 @@ function draw() {
     circles[i].update();
     circles[i].display();
     circles[i].checkBoundaries();
+    circles[i].checkRelationshipStatus();
   }
 }
