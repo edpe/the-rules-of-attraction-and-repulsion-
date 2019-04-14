@@ -43,6 +43,14 @@ class CircleAgent {
     }
     this.acc = force;
   }
+
+  changeState() {
+    this.acc = createVector();
+    this.vel = createVector();
+    return this.attractedState
+      ? (this.attractedState = false)
+      : (this.attractedState = true);
+  }
 }
 
 function setup() {
