@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "python3 -m http.server"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "p5": "^0.7.2"
+    "p5": "^0.7.2",
+    "tone": "^13.4.9",
+    "unmute": "^0.1.3"
   }
 }
