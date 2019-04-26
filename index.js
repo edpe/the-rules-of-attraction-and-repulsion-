@@ -1,5 +1,7 @@
 var scribble = new Scribble();
 let circles = [];
+var omniOsc1 = new Tone.OmniOscillator(0, 'pwm').toMaster();
+var omniOsc2 = new Tone.OmniOscillator(0, 'pwm').toMaster();
 
 class CircleAgent {
   constructor(posX, posY, accX, accY) {
@@ -23,6 +25,7 @@ class CircleAgent {
   }
 
   checkBoundaries() {
+    // boundary collisions trigger bass drum
     if (this.pos.x > windowWidth || this.pos.x < 0) {
       this.vel.x = this.vel.x * -1;
     }
@@ -75,6 +78,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   for (var i = 0; i < 2; i++) {
     circles.push(new CircleAgent(random(windowWidth), random(windowHeight)));
+      omniOsc1.start();
+      omniOsc2.start();
   }
 }
 
@@ -86,5 +91,8 @@ function draw() {
     circles[i].display();
     circles[i].checkBoundaries();
     circles[i].checkRelationshipStatus();
+
+    omniOsc1.frequency.value = (circles[0].pos.x) * 0.1
+    omniOsc2.frequency.value = (circles[1].pos.x) * 0.1
   }
 }
